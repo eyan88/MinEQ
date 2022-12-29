@@ -166,7 +166,8 @@ bool MinEQAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* MinEQAudioProcessor::createEditor()
 {
-    return new MinEQAudioProcessorEditor (*this);
+//    return new MinEQAudioProcessorEditor (*this);
+    return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
@@ -187,23 +188,23 @@ juce::AudioProcessorValueTreeState::ParameterLayout MinEQAudioProcessor::createP
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
     
 //    Parameter for lowcut frequency
-    layout.add(std::make_unique<juce::AudioParameterFloat>("LowCut Freq",
+    layout.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("LowCut Freq",1),
                                                            "LowCut Freq",
                                                            juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 1.f), 20.f));
 //    Parameter for highcut frequency
-    layout.add(std::make_unique<juce::AudioParameterFloat>("HighCut Freq",
+    layout.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("HighCut Freq",1),
                                                            "HighCut Freq",
                                                            juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 1.f), 20000.f));
 //    Parameter for peak frequency - control which frequencies to adjust
-    layout.add(std::make_unique<juce::AudioParameterFloat>("Peak Freq",
+    layout.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("Peak Freq",1),
                                                            "Peak Freq",
                                                            juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 1.f), 750.f));
 //    Parameter for peak gain - control gain of peak frequencies
-    layout.add(std::make_unique<juce::AudioParameterFloat>("Peak Gain",
+    layout.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("Peak Gain",1),
                                                            "Peak Gain",
                                                            juce::NormalisableRange<float>(-24.f, 24.f, 0.5f, 1.f), 0.0f));
 //    Parameter for peak quality - control how tight(high) or wide(low) the peak band is
-    layout.add(std::make_unique<juce::AudioParameterFloat>("Peak Quality",
+    layout.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("Peak Quality",1),
                                                            "Peak Quality",
                                                            juce::NormalisableRange<float>(0.1f, 10.f, 0.05f, 1.f), 1.f));
     juce::StringArray stringArray;
@@ -214,8 +215,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout MinEQAudioProcessor::createP
         stringArray.add(str);
     }
     
-    layout.add(std::make_unique<juce::AudioParameterChoice>("LowCut Slope", "LowCut Slope", stringArray, 0));
-    layout.add(std::make_unique<juce::AudioParameterChoice>("HighCut Slope", "HighCut Slope", stringArray, 0));
+    layout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID("LowCut Slope",1), "LowCut Slope", stringArray, 0));
+    layout.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID("HighCut Slope",1), "HighCut Slope", stringArray, 0));
     
     return layout;
 }
