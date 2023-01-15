@@ -120,7 +120,6 @@ void MinEQAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
     auto& rightLowCut = rightChain.get<ChainPositions::LowCut>();
     updateCutFilter(rightLowCut, cutCoefficients, chainSettings.lowCutSlope);
     
-    
 }
 
 void MinEQAudioProcessor::releaseResources()
